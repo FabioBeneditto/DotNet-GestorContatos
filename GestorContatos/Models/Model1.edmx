@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="contatosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Contato">
+          <Key>
+            <PropertyRef Name="CodContato" />
+          </Key>
+          <Property Name="CodContato" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="DataNascimento" Type="datetime" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Endereco" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Operadora">
+          <Key>
+            <PropertyRef Name="CodOperadora" />
+          </Key>
+          <Property Name="CodOperadora" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Telefone">
+          <Key>
+            <PropertyRef Name="CodFone" />
+          </Key>
+          <Property Name="CodFone" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodContato" Type="int" Nullable="false" />
+          <Property Name="Numero" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CodOperadora" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Telefone_Contato">
+          <End Role="Contato" Type="Self.Contato" Multiplicity="1" />
+          <End Role="Telefone" Type="Self.Telefone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contato">
+              <PropertyRef Name="CodContato" />
+            </Principal>
+            <Dependent Role="Telefone">
+              <PropertyRef Name="CodContato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Telefone_Operadora">
+          <End Role="Operadora" Type="Self.Operadora" Multiplicity="1" />
+          <End Role="Telefone" Type="Self.Telefone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operadora">
+              <PropertyRef Name="CodOperadora" />
+            </Principal>
+            <Dependent Role="Telefone">
+              <PropertyRef Name="CodOperadora" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="contatosModelStoreContainer">
+          <EntitySet Name="Contato" EntityType="Self.Contato" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Operadora" EntityType="Self.Operadora" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Telefone" EntityType="Self.Telefone" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Telefone_Contato" Association="Self.FK_Telefone_Contato">
+            <End Role="Contato" EntitySet="Contato" />
+            <End Role="Telefone" EntitySet="Telefone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Telefone_Operadora" Association="Self.FK_Telefone_Operadora">
+            <End Role="Operadora" EntitySet="Operadora" />
+            <End Role="Telefone" EntitySet="Telefone" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="contatosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Contato">
+          <Key>
+            <PropertyRef Name="CodContato" />
+          </Key>
+          <Property Name="CodContato" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DataNascimento" Type="DateTime" Precision="3" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Endereco" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Telefone" Relationship="Self.FK_Telefone_Contato" FromRole="Contato" ToRole="Telefone" />
+        </EntityType>
+        <EntityType Name="Operadora">
+          <Key>
+            <PropertyRef Name="CodOperadora" />
+          </Key>
+          <Property Name="CodOperadora" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Telefone" Relationship="Self.FK_Telefone_Operadora" FromRole="Operadora" ToRole="Telefone" />
+        </EntityType>
+        <EntityType Name="Telefone">
+          <Key>
+            <PropertyRef Name="CodFone" />
+          </Key>
+          <Property Name="CodFone" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodContato" Type="Int32" Nullable="false" />
+          <Property Name="Numero" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CodOperadora" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contato" Relationship="Self.FK_Telefone_Contato" FromRole="Telefone" ToRole="Contato" />
+          <NavigationProperty Name="Operadora" Relationship="Self.FK_Telefone_Operadora" FromRole="Telefone" ToRole="Operadora" />
+        </EntityType>
+        <Association Name="FK_Telefone_Contato">
+          <End Role="Contato" Type="Self.Contato" Multiplicity="1" />
+          <End Role="Telefone" Type="Self.Telefone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contato">
+              <PropertyRef Name="CodContato" />
+            </Principal>
+            <Dependent Role="Telefone">
+              <PropertyRef Name="CodContato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Telefone_Operadora">
+          <End Role="Operadora" Type="Self.Operadora" Multiplicity="1" />
+          <End Role="Telefone" Type="Self.Telefone" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Operadora">
+              <PropertyRef Name="CodOperadora" />
+            </Principal>
+            <Dependent Role="Telefone">
+              <PropertyRef Name="CodOperadora" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="contatosEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Contato" EntityType="Self.Contato" />
+          <EntitySet Name="Operadora" EntityType="Self.Operadora" />
+          <EntitySet Name="Telefone" EntityType="Self.Telefone" />
+          <AssociationSet Name="FK_Telefone_Contato" Association="Self.FK_Telefone_Contato">
+            <End Role="Contato" EntitySet="Contato" />
+            <End Role="Telefone" EntitySet="Telefone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Telefone_Operadora" Association="Self.FK_Telefone_Operadora">
+            <End Role="Operadora" EntitySet="Operadora" />
+            <End Role="Telefone" EntitySet="Telefone" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="contatosModelStoreContainer" CdmEntityContainer="contatosEntities">
+          <EntitySetMapping Name="Contato">
+            <EntityTypeMapping TypeName="contatosModel.Contato">
+              <MappingFragment StoreEntitySet="Contato">
+                <ScalarProperty Name="CodContato" ColumnName="CodContato" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="DataNascimento" ColumnName="DataNascimento" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Endereco" ColumnName="Endereco" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Operadora">
+            <EntityTypeMapping TypeName="contatosModel.Operadora">
+              <MappingFragment StoreEntitySet="Operadora">
+                <ScalarProperty Name="CodOperadora" ColumnName="CodOperadora" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Telefone">
+            <EntityTypeMapping TypeName="contatosModel.Telefone">
+              <MappingFragment StoreEntitySet="Telefone">
+                <ScalarProperty Name="CodFone" ColumnName="CodFone" />
+                <ScalarProperty Name="CodContato" ColumnName="CodContato" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="CodOperadora" ColumnName="CodOperadora" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
