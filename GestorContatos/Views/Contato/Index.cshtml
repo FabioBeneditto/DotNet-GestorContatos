@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<GestorContatos.Models.Contato>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = ":: Contatos ::";
 }
 
-<h2>Index</h2>
+<h2>Listagem de Contatos</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Novo Contato", "Create")
 </p>
-<table>
+<table class="table table-bordered table-striped">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.CodContato)
