@@ -1,60 +1,48 @@
-﻿@model GestorContatos.Models.Telefone
+﻿@model GestorContatos.Models.ViewModels.TelefoneCreate
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = ":: Contatos :: ";
 }
 
-<h2>Create</h2>
+<h2>Incluir telefone do contato @Html.ValueFor(model => model.CodContato)</h2>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
+    <div class="form form-horizontal">
+        <fieldset>
+            @Html.HiddenFor(model => model.CodContato)
+            <legend>Telefone</legend>
 
-    <fieldset>
-        <legend>Telefone</legend>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Numero, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Numero, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Numero, "", new { @class = "text-danger" })
+                </div>
+            </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CodFone)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CodFone)
-            @Html.ValidationMessageFor(model => model.CodFone)
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CodOperadora, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CodOperadora, new SelectList(Model.Operadora, "CodOperadora", "Nome"), "-- Selecione --")
+                    @Html.ValidationMessageFor(model => model.CodOperadora, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Salvar" class="btn btn-default" />
+                </div>
+            </div>
+        </fieldset>
+    </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CodContato, "Contato")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("CodContato", String.Empty)
-            @Html.ValidationMessageFor(model => model.CodContato)
-        </div>
+        }
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Numero)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Numero)
-            @Html.ValidationMessageFor(model => model.Numero)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CodOperadora, "Operadora")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("CodOperadora", String.Empty)
-            @Html.ValidationMessageFor(model => model.CodOperadora)
+        <div>
+            @Html.ActionLink("Retornar aos Contatos", "..")
         </div>
 
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

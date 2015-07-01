@@ -18,6 +18,7 @@ namespace GestorContatos.Controllers
             return View(db.Contato.ToList());
         }
 
+        [HttpGet]
         public ActionResult Details(int id)
         {
             Contato contato = db.Contato.Find(id);

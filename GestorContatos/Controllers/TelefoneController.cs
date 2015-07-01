@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+// using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GestorContatos.Models;
+using GestorContatos.Models.ViewModels;
 
 namespace GestorContatos.Controllers
 {
@@ -13,36 +15,14 @@ namespace GestorContatos.Controllers
     {
         private contatosEntities db = new contatosEntities();
 
-        //
-        // GET: /Telefone/
-
-        public ActionResult Index()
+        public ActionResult Create(int CodigoContrato)
         {
-            var telefone = db.Telefone.Include(t => t.Contato).Include(t => t.Operadora);
-            return View(telefone.ToList());
-        }
+            TelefoneCreate fone = new TelefoneCreate();
+            fone.CodContato = Convert.ToInt32(CodigoContrato);
+            fone.Operadora = db.Operadora.ToList<Operadora>();
+            fone.Contato = db.Contato.ToList<Contato>();
 
-        //
-        // GET: /Telefone/Details/5
-
-        public ActionResult Details(int id = 0)
-        {
-            Telefone telefone = db.Telefone.Find(id);
-            if (telefone == null)
-            {
-                return HttpNotFound();
-            }
-            return View(telefone);
-        }
-
-        //
-        // GET: /Telefone/Create
-
-        public ActionResult Create()
-        {
-            ViewBag.CodContato = new SelectList(db.Contato, "CodContato", "Nome");
-            ViewBag.CodOperadora = new SelectList(db.Operadora, "CodOperadora", "Nome");
-            return View();
+            return View(fone);
         }
 
         //
@@ -62,71 +42,6 @@ namespace GestorContatos.Controllers
             ViewBag.CodContato = new SelectList(db.Contato, "CodContato", "Nome", telefone.CodContato);
             ViewBag.CodOperadora = new SelectList(db.Operadora, "CodOperadora", "Nome", telefone.CodOperadora);
             return View(telefone);
-        }
-
-        //
-        // GET: /Telefone/Edit/5
-
-        public ActionResult Edit(int id = 0)
-        {
-            Telefone telefone = db.Telefone.Find(id);
-            if (telefone == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.CodContato = new SelectList(db.Contato, "CodContato", "Nome", telefone.CodContato);
-            ViewBag.CodOperadora = new SelectList(db.Operadora, "CodOperadora", "Nome", telefone.CodOperadora);
-            return View(telefone);
-        }
-
-        //
-        // POST: /Telefone/Edit/5
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Telefone telefone)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(telefone).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.CodContato = new SelectList(db.Contato, "CodContato", "Nome", telefone.CodContato);
-            ViewBag.CodOperadora = new SelectList(db.Operadora, "CodOperadora", "Nome", telefone.CodOperadora);
-            return View(telefone);
-        }
-
-        //
-        // GET: /Telefone/Delete/5
-
-        public ActionResult Delete(int id = 0)
-        {
-            Telefone telefone = db.Telefone.Find(id);
-            if (telefone == null)
-            {
-                return HttpNotFound();
-            }
-            return View(telefone);
-        }
-
-        //
-        // POST: /Telefone/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Telefone telefone = db.Telefone.Find(id);
-            db.Telefone.Remove(telefone);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
         }
     }
 }
