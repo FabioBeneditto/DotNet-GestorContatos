@@ -4,10 +4,10 @@
     ViewBag.Title = ":: Contatos ::";
 }
 
-<h2>Listagem de Contatos</h2>
+<h2>Lista de Contatos</h2>
 
 <p>
-    @Html.ActionLink("Novo Contato", "Create")
+    @Html.ActionLink("Novo Registro", "Create")
 </p>
 <table class="table table-bordered table-striped">
     <tr>
@@ -18,15 +18,15 @@
             @Html.DisplayNameFor(model => model.Nome)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DataNascimento)
+            @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.DataNascimento)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Endereco)
         </th>
-        <th></th>
+        <th>Ações</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -38,18 +38,18 @@
             @Html.DisplayFor(modelItem => item.Nome)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DataNascimento)
+            @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Email)
+            @Html.DisplayFor(modelItem => item.DataNascimento)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Endereco)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Editar", "Edit", new {id=item.CodContato}) |
+            @Html.ActionLink("Detalhes", "Details", new {id=item.CodContato}) |
+            @Html.ActionLink("Adicionar Telefone", "../Telefone/Create", new {id=item.CodContato})
         </td>
     </tr>
 }

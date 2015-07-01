@@ -13,67 +13,55 @@ namespace GestorContatos.Controllers
     {
         private contatosEntities db = new contatosEntities();
 
-        //
-        // GET: /Contato/
-
         public ActionResult Index()
         {
             return View(db.Contato.ToList());
         }
 
-        //
-        // GET: /Contato/Details/5
-
-        public ActionResult Details(int id = 0)
+        public ActionResult Details(int id)
         {
             Contato contato = db.Contato.Find(id);
             if (contato == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(contato);
         }
-
-        //
-        // GET: /Contato/Create
 
         public ActionResult Create()
         {
             return View();
         }
 
-        //
-        // POST: /Contato/Create
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Contato contato)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Contato.Add(contato);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Contato.Add(contato);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
-
-            return View(contato);
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Não foi possível salvar o contato. " + ex.Message);
+            }
+            return View();
         }
-
-        //
-        // GET: /Contato/Edit/5
 
         public ActionResult Edit(int id = 0)
         {
             Contato contato = db.Contato.Find(id);
             if (contato == null)
             {
-                return HttpNotFound();
+                return RedirectToAction("Index");
             }
             return View(contato);
         }
-
-        //
-        // POST: /Contato/Edit/5
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -86,38 +74,6 @@ namespace GestorContatos.Controllers
                 return RedirectToAction("Index");
             }
             return View(contato);
-        }
-
-        //
-        // GET: /Contato/Delete/5
-
-        public ActionResult Delete(int id = 0)
-        {
-            Contato contato = db.Contato.Find(id);
-            if (contato == null)
-            {
-                return HttpNotFound();
-            }
-            return View(contato);
-        }
-
-        //
-        // POST: /Contato/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Contato contato = db.Contato.Find(id);
-            db.Contato.Remove(contato);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
         }
     }
 }
