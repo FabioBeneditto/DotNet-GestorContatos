@@ -20,7 +20,7 @@ namespace GestorContatos.Controllers
             TelefoneCreate fone = new TelefoneCreate();
             fone.CodContato = Convert.ToInt32(CodContato);
             fone.Operadora = db.Operadora.ToList<Operadora>();
-            fone.Contato = db.Contato.ToList<Contato>();
+            fone.Contato = db.Contato.Find(CodContato).Nome;
 
             return View(fone);
         }
@@ -36,12 +36,12 @@ namespace GestorContatos.Controllers
             {
                 db.Telefone.Add(telefone);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Contato");
             }
 
             ViewBag.CodContato = new SelectList(db.Contato, "CodContato", "Nome", telefone.CodContato);
             ViewBag.CodOperadora = new SelectList(db.Operadora, "CodOperadora", "Nome", telefone.CodOperadora);
-            return View(telefone);
+            return RedirectToAction("Index", "Contato");
         }
     }
 }
