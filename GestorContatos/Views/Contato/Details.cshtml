@@ -1,50 +1,81 @@
 ﻿@model GestorContatos.Models.Contato
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = ":: Contatos ::";
 }
 
-<h2>Details</h2>
+<h2>Detalhes do Contato</h2>
 
-<fieldset>
-    <legend>Contato</legend>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.CodContato)
-    </div>
-    <div class="display-field">
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.CodContato)
+    </dt>
+    <dd>
         @Html.DisplayFor(model => model.CodContato)
-    </div>
+    </dd>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Nome)
-    </div>
-    <div class="display-field">
+    <dt>
+        @Html.DisplayNameFor(model => model.Nome)
+    </dt>
+    <dd>
         @Html.DisplayFor(model => model.Nome)
-    </div>
+    </dd>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.DataNascimento)
-    </div>
-    <div class="display-field">
+    <dt>
+        @Html.DisplayNameFor(model => model.DataNascimento)
+    </dt>
+    <dd>
         @Html.DisplayFor(model => model.DataNascimento)
-    </div>
+    </dd>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Email)
-    </div>
-    <div class="display-field">
+    <dt>
+        @Html.DisplayNameFor(model => model.Email)
+    </dt>
+    <dd>
         @Html.DisplayFor(model => model.Email)
-    </div>
+    </dd>
 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Endereco)
-    </div>
-    <div class="display-field">
+    <dt>
+        @Html.DisplayNameFor(model => model.Endereco)
+    </dt>
+    <dd>
         @Html.DisplayFor(model => model.Endereco)
-    </div>
-</fieldset>
+    </dd>
+</dl>
+
+@if (Model.Telefone.Count > 0)
+{
+    <h3>Telefones do contato</h3>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayName("Numero")
+                </th>
+                <th>
+                    @Html.DisplayName("Operadora")
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Telefone)
+            {
+                if (item.CodContato == Model.CodContato) { 
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Numero)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Operadora.Nome)
+                    </td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Voltar", "Index")
 </p>

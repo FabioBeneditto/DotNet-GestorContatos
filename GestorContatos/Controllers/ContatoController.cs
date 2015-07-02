@@ -22,6 +22,8 @@ namespace GestorContatos.Controllers
         public ActionResult Details(int id)
         {
             Contato contato = db.Contato.Find(id);
+            contato.Telefone = db.Telefone.ToList<Telefone>();
+           
             if (contato == null)
             {
                 return RedirectToAction("Index");

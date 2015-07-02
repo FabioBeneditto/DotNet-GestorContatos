@@ -287,10 +287,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Contato\Index.cshtml" />
-    <Content Include="Views\Contato\Details.cshtml" />
     <Content Include="Views\Contato\Create.cshtml" />
     <Content Include="Views\Contato\Edit.cshtml" />
     <Content Include="Views\Telefone\Create.cshtml" />
+    <Content Include="Views\Contato\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
