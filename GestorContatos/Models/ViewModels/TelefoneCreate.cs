@@ -12,7 +12,7 @@ namespace GestorContatos.Models.ViewModels
         public string Numero { get; set; }
         public int CodOperadora { get; set; }
 
-        public List<Contato> Contato { get; set; }
+        public string Contato { get; set; }
         public List<Operadora> Operadora { get; set; }
     }
 }
