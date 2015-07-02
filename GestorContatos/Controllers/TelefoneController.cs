@@ -15,10 +15,10 @@ namespace GestorContatos.Controllers
     {
         private contatosEntities db = new contatosEntities();
 
-        public ActionResult Create(int CodigoContrato)
+        public ActionResult Create(int CodContato)
         {
             TelefoneCreate fone = new TelefoneCreate();
-            fone.CodContato = Convert.ToInt32(CodigoContrato);
+            fone.CodContato = Convert.ToInt32(CodContato);
             fone.Operadora = db.Operadora.ToList<Operadora>();
             fone.Contato = db.Contato.ToList<Contato>();
 

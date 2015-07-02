@@ -49,7 +49,7 @@
         <td>
             @Html.ActionLink("Editar", "Edit", new {id=item.CodContato}) |
             @Html.ActionLink("Detalhes", "Details", new {id=item.CodContato}) |
-            @Html.ActionLink("Adicionar Telefone", "../Telefone/Create", new {id=item.CodContato})
+            @Html.ActionLink("Adicionar Telefone", "../Telefone/Create", new {CodContato=item.CodContato})
         </td>
     </tr>
 }
