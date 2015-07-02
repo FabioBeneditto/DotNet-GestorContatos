@@ -24,10 +24,7 @@ namespace GestorContatos.Controllers
 
             return View(fone);
         }
-
-        //
-        // POST: /Telefone/Create
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Telefone telefone)

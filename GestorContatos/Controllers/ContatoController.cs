@@ -22,7 +22,7 @@ namespace GestorContatos.Controllers
         public ActionResult Details(int id)
         {
             Contato contato = db.Contato.Find(id);
-            contato.Telefone = db.Telefone.ToList<Telefone>();
+            contato.Telefone = db.Telefone.Where(x => x.CodContato == id).ToList();
            
             if (contato == null)
             {

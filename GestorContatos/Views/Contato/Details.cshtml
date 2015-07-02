@@ -61,7 +61,6 @@
         <tbody>
             @foreach (var item in Model.Telefone)
             {
-                if (item.CodContato == Model.CodContato) { 
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Numero)
@@ -70,7 +69,6 @@
                         @Html.DisplayFor(modelItem => item.Operadora.Nome)
                     </td>
                 </tr>
-                }
             }
         </tbody>
     </table>
