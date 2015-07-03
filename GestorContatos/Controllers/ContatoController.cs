@@ -15,14 +15,14 @@ namespace GestorContatos.Controllers
 
         public ActionResult Index()
         {
-            return View(db.Contato.ToList());
+            List<Contato> contatos = db.Contato.ToList();
+            return View(contatos);
         }
 
         [HttpGet]
         public ActionResult Details(int id)
         {
             Contato contato = db.Contato.Find(id);
-            contato.Telefones = db.Telefone.Where(x => x.CodContato == id).ToList();
            
             if (contato == null)
             {
