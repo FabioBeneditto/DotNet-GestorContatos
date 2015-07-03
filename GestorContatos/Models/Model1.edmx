@@ -82,7 +82,7 @@
           <Property Name="DataNascimento" Type="DateTime" Precision="3" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Endereco" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Telefone" Relationship="Self.FK_Telefone_Contato" FromRole="Contato" ToRole="Telefone" />
+          <NavigationProperty Name="Telefones" Relationship="Self.FK_Telefone_Contato" FromRole="Contato" ToRole="Telefone" />
         </EntityType>
         <EntityType Name="Operadora">
           <Key>
@@ -90,7 +90,6 @@
           </Key>
           <Property Name="CodOperadora" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Telefone" Relationship="Self.FK_Telefone_Operadora" FromRole="Operadora" ToRole="Telefone" />
         </EntityType>
         <EntityType Name="Telefone">
           <Key>
